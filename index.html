@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NRSC Landing Page</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+  }
+  header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  .main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    background: url('/IMAGES/landingbg.jpg') no-repeat center;
+    background-size: cover;
+    min-height: 75vh;
+  }
+  .info-section {
+    width: 70%;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .login-signup {
+    width: 25%;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  h1 {
+    color: #004085;
+    margin-bottom: 20px;
+  }
+  p {
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  li {
+    margin-bottom: 10px;
+  }
+  .btn {
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    background-color: #ffc107;
+    color: #333;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  .btn:hover {
+    background-color: #ffca28;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Welcome to NRSC</h1>
+</header>
+
+<div class="main-content">
+  <div class="info-section">
+    <h2>About NRSC</h2>
+    <p>National Remote Sensing Centre (NRSC) is a leading centre of ISRO (Indian Space Research Organisation) responsible for satellite data acquisition and processing, remote sensing applications, satellite communication, and conducting research in the field of remote sensing and GIS (Geographic Information System).</p>
+    <p>NRSC provides data and services related to natural resource management, disaster monitoring, agricultural monitoring, urban planning, and environmental monitoring.</p>
+    <ul>
+      <li>Remote sensing data acquisition</li>
+      <li>Remote sensing applications</li>
+      <li>GIS services</li>
+      <li>Disaster monitoring</li>
+      <li>Agricultural monitoring</li>
+    </ul>
+  </div>
+  <div class="login-signup">
+    <h2>Get Started</h2>
+    <a href="/NAVFILES/login.html" class="btn">Login</a>
+    <a href="/NAVFILES/register.html" class="btn">Signup</a>
+    <h2>Have Questions?</h2>
+    <p>Contact us at: <a href="https://www.nrsc.gov.in/">info@nrsc.gov.in</a></p>
+  </div>
+</div>
+
+<footer>
+  &copy; 2024 NRSC. All rights reserved.
+</footer>
+
+</body>
+</html>
