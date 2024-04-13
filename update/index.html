@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhuvan MNREGA</title>
+    <style>
+        /* CSS for styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+        }
+        nav {
+            background-color: #EAF2F8;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+        nav input[type="text"] {
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+        }
+        nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li:last-child {
+    margin-right: 0;
+}
+    
+        .left-section {
+            width: 20%;
+            float: left;
+        }
+        .right-section {
+            width: 80%;
+            float: left;
+        }
+        /* Add more styling as needed */
+        
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 80%;
+    max-width: 1200px;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.left-section {
+    flex: 1;
+}
+
+.left-section h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+form {
+    margin-bottom: 2rem;
+    padding: 25px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+form select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.right-section {
+    flex: 2;
+}
+
+#barGraph {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+a {
+    color: #4CAF50;
+    text-decoration: none;
+    margin-left: 1rem;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <img src="/NRSC/NAVFILES/IMAGES/LOGO.png" alt="NRSC Logo" width="300">
+        </div>
+        <h1>Bhuvan MNREGA Ministry of Rural Development</h1>
+        <div>
+            <img src="/NRSC/NAVFILES/IMAGES/ashok_logo.png" alt="Other Logo" width="50">
+        </div>
+    </header>
+    <nav>
+        <input type="text" placeholder="Search...">
+        <button><img src="search_icon.png" alt="Search"></button>
+        <ul>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Tool</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="/NRSC/update/templates/SV.html">Rainfall analysis</a></li>
+        </ul>
+    </nav>
+    <div class="left-section">
+        <h2 style="text-align: center;">Field Data Viewer</h2>
+        <form id="filterForm">
+           
+            <label for="stage">Financial year </label>
+            <select id="stage">
+                <!-- Options will be filled dynamically -->
+            </select><br>
+            <label for="stage"> State   </label>
+            <select id="stage">
+                <!-- Options will be filled dynamically -->
+            </select><br>
+            <label for="stage"> District   </label>
+            <select id="stage">
+                <!-- Options will be filled dynamically -->
+            </select><br>
+            <label for="stage"> block  </label>
+            <select id="stage">
+                <!-- Options will be filled dynamically -->
+            </select><br>
+            <label for="stage"> Panchayat</label>
+            <select id="stage">
+                <!-- Options will be filled dynamically -->
+            </select><br>
+            <label for="stage">Category</label>
+            <select id="stage">
+                <!-- Options will be filled dynamically -->
+            </select><br>
+            <!-- Add other dropdowns similarly -->
+            <a href="#" style="padding-top: 25px;">Request to become NREGA user</a>
+        </form>
+        <button id="viewButton" style="margin-left:100px;">View</button>
+    </div>
+    <div class="right-section">
+        <!-- Graph will be added here dynamically -->
+        <canvas id="barGraph" width="400" height="200"></canvas>
+    </div>
+<script src="script.js"></script>
+    <script>
+        // JavaScript for fetching data and updating UI
+        // Fetch data for dropdowns from API or use hardcoded data
+        // Example:
+        const stages = ['Stage 1', 'Stage 2', 'Stage 3'];
+        const stageSelect = document.getElementById('stage');
+        stages.forEach(stage => {
+            const option = document.createElement('option');
+            option.textContent = stage;
+            stageSelect.appendChild(option);
+        });
+
+        // Add event listener to view button to update graph
+        const viewButton = document.getElementById('viewButton');
+        viewButton.addEventListener('click', function() {
+            // Code to fetch data based on selected dropdown values and update graph
+            // Example:
+            const selectedStage = stageSelect.value;
+            // Fetch data based on selectedStage and other dropdown values
+            // Update bar graph accordingly
+            // Example:
+            const canvas = document.getElementById('barGraph');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'green';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        });
+    </script>
+</body>
+</html>

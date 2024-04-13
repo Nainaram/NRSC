@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rainfall Data Visualization</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #dropdowns {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+        #graph {
+            margin: 0 auto;
+            width: 80%;
+            max-width: 800px;
+        }
+        input[type="file"] {
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<header>
+    <div>
+        <img src="/NRSC/NAVFILES/IMAGES/LOGO.png" alt="NRSC Logo" width="300">
+    </div>
+    <h1>Bhuvan MNREGA Ministry of Rural Development</h1>
+    <div>
+        <img src="/NRSC/NAVFILES/IMAGES/ashok_logo.png" alt="Other Logo" width="50">
+    </div>
+</header>
+
+<body>
+    <h1>Rainfall Data Visualization</h1>
+    <div id="dropdowns">
+        <select id="districtDropdown">
+            <option value="">Select District</option>
+        </select>
+        <select id="mandalDropdown">
+            <option value="">Select Mandal</option>
+        </select>
+    </div>
+    <div id="graph"></div>
+    <input type="file" id="fileInput" accept=".csv">
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const csvData = event.target.result;
+                processData(csvData);
+            };
+
+            reader.readAsText(file);
+        });
+
+        function processData(csvData) {
+            const data = d3.csvParse(csvData, function(d) {
+                return {
+                    ...d,
+                    Date: new Date(d.Date) // Parse Date field as Date object
+                };
+            });
+
+            const districts = [...new Set(data.map(d => d.District))];
+            const mandals = [...new Set(data.map(d => d.Mandal))];
+
+            const districtDropdown = document.getElementById('districtDropdown');
+            districts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district;
+                option.textContent = district;
+                districtDropdown.appendChild(option);
+            });
+
+            const mandalDropdown = document.getElementById('mandalDropdown');
+            mandals.forEach(mandal => {
+                const option = document.createElement('option');
+                option.value = mandal;
+                option.textContent = mandal;
+                mandalDropdown.appendChild(option);
+            });
+
+            // Event handling
+            districtDropdown.addEventListener('change', updateGraph);
+            mandalDropdown.addEventListener('change', updateGraph);
+
+            // Initial graph rendering
+            updateGraph();
+        }
+
+        // Function to update the graph based on dropdown selection
+        function updateGraph() {
+            const selectedDistrict = document.getElementById('districtDropdown').value;
+            const selectedMandal = document.getElementById('mandalDropdown').value;
+
+            // Fetch filtered data and draw graph
+            fetchFilteredData(selectedDistrict, selectedMandal).then(data => {
+                drawGraph(data);
+            });
+        }
+
+        // Function to fetch filtered data from CSV file
+        async function fetchFilteredData(district, mandal) {
+            const data = d3.csvParse(await (await fetch('TS Rainfall data January 2023_0.csv')).text());
+
+            return data.filter(d => d.District === district && d.Mandal === mandal);
+        }
+
+        // Function to draw the graph
+        function drawGraph(data) {
+            // Clear previous graph
+            document.getElementById('graph').innerHTML = '';
+
+            // Implement graph drawing logic here using your preferred charting library (e.g., Chart.js, Plotly.js)
+            // Example: Create a bar chart using D3.js
+            const svg = d3.select('#graph').append('svg')
+                .attr('width', 800)
+                .attr('height', 400);
+
+            // Add code to draw the graph based on the filtered data
+            // For example, draw a bar chart
+            const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+            const width = 800 - margin.left - margin.right;
+            const height = 400 - margin.top - margin.bottom;
+
+            const x = d3.scaleBand()
+                .domain(data.map(d => d.Date))
+                .range([margin.left, width - margin.right])
+                .padding(0.1);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => +d['Rain (mm)'])]).nice()
+                .range([height - margin.bottom, margin.top]);
+
+            svg.append('g')
+                .attr('fill', 'steelblue')
+                .selectAll('rect')
+                .data(data)
+                .join('rect')
+                .attr('x', d => x(d.Date))
+                .attr('y', d => y(+d['Rain (mm)']))
+                .attr('height', d => y(0) - y(+d['Rain (mm)']))
+                .attr('width', x.bandwidth());
+
+            svg.append('g')
+                .attr('transform', `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x));
+
+            svg.append('g')
+                .attr('transform', `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y));
+        }
+    </script>
+</body>
+</html>
